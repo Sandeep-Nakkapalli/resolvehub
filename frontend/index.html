@@ -1,0 +1,115 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0B0718">
+  <meta name="description" content="ResolveHub is a transparent digital complaint resolution platform for customers and employees.">
+  <title>ResolveHub — Your Voice Matters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+</head>
+<body class="landing-page">
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="grid-overlay"></div>
+
+  <header class="site-header" id="site-header">
+    <nav class="nav-shell container" aria-label="Primary navigation">
+      <a class="brand" href="/" aria-label="ResolveHub home">
+        <span class="brand-mark" aria-hidden="true"><span></span><i></i><b></b></span>
+        <span class="brand-copy"><strong>Resolve<span>Hub</span></strong><small>Digital Complaint Resolution Platform</small></span>
+      </a>
+      <button class="mobile-menu-button" aria-label="Open navigation" aria-expanded="false"><i data-lucide="menu"></i></button>
+      <div class="nav-links">
+        <a class="active" href="#home">Home</a>
+        <a href="#sectors">Sectors</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="/track-complaint.html">Track Complaint</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a class="button button-ghost button-small" href="/login.html">Log in</a>
+        <a class="button button-primary button-small" href="/register.html">Register <i data-lucide="arrow-up-right"></i></a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container" id="home">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="eyebrow-pulse"></span> A clearer path to accountability</div>
+        <h1>Your Voice.<br>Your <span class="gradient-text">Rights.</span><br>Our Commitment.</h1>
+        <p class="hero-description">One centralized platform to raise concerns, report service issues and seek accountability across multiple private-sector industries. Your complaint matters, and your voice deserves to be heard.</p>
+        <div class="hero-actions">
+          <a class="button button-primary button-large" href="/register.html">Register a Complaint <i data-lucide="arrow-up-right"></i></a>
+          <a class="button button-outline button-large" href="/track-complaint.html"><i data-lucide="radar"></i> Track Your Complaint</a>
+        </div>
+        <div class="trust-indicators">
+          <span><strong data-stat="supported_sectors">—</strong><small>Major Sectors</small></span>
+          <span><strong data-stat="complaint_categories">—</strong><small>Complaint Categories</small></span>
+          <span><strong>24/7</strong><small>Transparent Tracking</small></span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal reveal-delay-1" aria-label="ResolveHub complaint resolution workspace illustration">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="floating-chip chip-top"><span class="chip-icon cyan"><i data-lucide="shield-check"></i></span><span><b>Protected</b><small>Evidence secured</small></span></div>
+        <div class="floating-chip chip-side"><span class="chip-icon pink"><i data-lucide="message-circle"></i></span><span><b>New response</b><small>Resolution team replied</small></span><em>now</em></div>
+        <div class="dashboard-illustration">
+          <div class="illustration-topbar"><span class="window-dots"><i></i><i></i><i></i></span><span>resolvehub<span class="topbar-slash">/</span>workspace</span><i data-lucide="more-horizontal"></i></div>
+          <div class="illustration-body">
+            <aside class="illustration-sidebar"><span class="mini-logo"><i data-lucide="sparkles"></i></span><i class="selected" data-lucide="layout-dashboard"></i><i data-lucide="file-text"></i><i data-lucide="message-square"></i><i data-lucide="bell"></i><i data-lucide="settings"></i></aside>
+            <div class="illustration-content">
+              <div class="illustration-heading"><span><small>GOOD MORNING, ALEX</small><b>Your resolution workspace</b></span><span class="avatar">A</span></div>
+              <div class="mini-stat-row"><div><small>ACTIVE COMPLAINTS</small><b>03</b><em class="positive">+2 this month</em></div><div><small>RESOLVED</small><b>08</b><em class="positive">Great progress</em></div></div>
+              <div class="complaint-preview"><div class="preview-title"><span><i data-lucide="circle-alert"></i> Complaint overview</span><small>Last updated 2m ago</small></div><div class="preview-line"><span class="preview-icon purple"><i data-lucide="building-2"></i></span><span><b>Unexpected balance deductions</b><small>Telecom · RH-2026-7F2A9C1D</small></span><strong class="status-pill status-progress">In progress</strong></div><div class="progress-track"><span></span></div><div class="timeline-mini"><span class="done"><i data-lucide="check"></i><small>Submitted</small></span><span class="done"><i data-lucide="check"></i><small>Assigned</small></span><span class="active"><i data-lucide="search"></i><small>Reviewing</small></span><span><i data-lucide="circle"></i><small>Resolved</small></span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-avatar"><span class="avatar avatar-pink">R</span><span><b>Resolution team</b><small>Here to help you</small></span><i data-lucide="sparkle"></i></div>
+      </div>
+    </section>
+
+    <section class="stats-section container reveal" aria-label="Platform statistics">
+      <div class="stats-card"><span class="stat-icon purple"><i data-lucide="layers-3"></i></span><span><b data-stat="supported_sectors">—</b><small>Supported Sectors</small></span><em>01</em></div>
+      <div class="stats-card"><span class="stat-icon pink"><i data-lucide="tags"></i></span><span><b data-stat="complaint_categories">—</b><small>Complaint Categories</small></span><em>02</em></div>
+      <div class="stats-card"><span class="stat-icon cyan"><i data-lucide="radar"></i></span><span><b>24/7</b><small>Complaint Tracking</small></span><em>03</em></div>
+      <div class="stats-card"><span class="stat-icon green"><i data-lucide="users-round"></i></span><span><b class="stat-compact">C&amp;E</b><small>Customers &amp; Employees</small></span><em>04</em></div>
+    </section>
+
+    <section class="section container" id="sectors">
+      <div class="section-heading reveal"><div><div class="eyebrow">EXPLORE THE NETWORK</div><h2>Every sector deserves<br><span class="gradient-text">a better conversation.</span></h2></div><a class="text-link" href="/sectors.html">View all sectors <i data-lucide="arrow-up-right"></i></a></div>
+      <div class="sector-grid" id="sector-grid"><div class="loading-state"><span class="loader"></span> Loading sectors from ResolveHub...</div></div>
+    </section>
+
+    <section class="section process-section" id="how-it-works">
+      <div class="container"><div class="section-heading centered reveal"><div><div class="eyebrow">SIMPLE BY DESIGN</div><h2>From concern to <span class="gradient-text">closure.</span></h2><p>Six transparent steps put you in control of your complaint journey.</p></div></div>
+      <div class="process-timeline reveal"><div class="process-step"><span>01</span><i data-lucide="user-round-plus"></i><b>Create an account</b><p>Set up your secure personal space in minutes.</p></div><div class="process-connector"></div><div class="process-step"><span>02</span><i data-lucide="building-2"></i><b>Choose sector & organization</b><p>Find the right place for your concern.</p></div><div class="process-connector"></div><div class="process-step"><span>03</span><i data-lucide="list-filter"></i><b>Select a category</b><p>Give your complaint the right context.</p></div><div class="process-connector"></div><div class="process-step"><span>04</span><i data-lucide="file-up"></i><b>Submit evidence</b><p>Share the details that help teams act.</p></div><div class="process-connector"></div><div class="process-step"><span>05</span><i data-lucide="route"></i><b>Track progress</b><p>See every milestone as it happens.</p></div><div class="process-connector"></div><div class="process-step"><span>06</span><i data-lucide="badge-check"></i><b>Receive resolution</b><p>Get clear updates and close the loop.</p></div></div></div>
+    </section>
+
+    <section class="section container" id="about">
+      <div class="section-heading reveal"><div><div class="eyebrow">WHY RESOLVEHUB</div><h2>Less noise.<br><span class="gradient-text">More resolution.</span></h2></div><p class="heading-aside">We turn fragmented complaint experiences into a structured, trackable conversation between people and the organizations they rely on.</p></div>
+      <div class="problem-grid"><article class="problem-card reveal"><span class="problem-number">01</span><i data-lucide="timer"></i><h3>Delayed complaint resolution</h3><p>Complaint tracking, assigned officers and resolution deadlines keep momentum visible.</p><span class="solution-label">OUR SOLUTION <b>→</b></span></article><article class="problem-card reveal reveal-delay-1"><span class="problem-number">02</span><i data-lucide="headphones-off"></i><h3>Poor customer service</h3><p>Centralized complaint submission creates one accountable communication channel.</p><span class="solution-label">OUR SOLUTION <b>→</b></span></article><article class="problem-card reveal reveal-delay-2"><span class="problem-number">03</span><i data-lucide="wallet-cards"></i><h3>Salary-related complaints</h3><p>Dedicated employee grievance management gives workplace concerns a clear route.</p><span class="solution-label">OUR SOLUTION <b>→</b></span></article><article class="problem-card reveal"><span class="problem-number">04</span><i data-lucide="eye-off"></i><h3>Lack of transparency</h3><p>Status timelines and real-time updates replace uncertainty with useful context.</p><span class="solution-label">OUR SOLUTION <b>→</b></span></article><article class="problem-card reveal reveal-delay-1"><span class="problem-number">05</span><i data-lucide="scale"></i><h3>No proper accountability</h3><p>Administrative monitoring, assignments and performance reports make action measurable.</p><span class="solution-label">OUR SOLUTION <b>→</b></span></article></div>
+    </section>
+
+    <section class="section feature-section" id="features"><div class="container"><div class="section-heading centered reveal"><div><div class="eyebrow">THE RESOLVEHUB EDGE</div><h2>Everything you need to<br><span class="gradient-text">be heard.</span></h2></div></div><div class="feature-grid reveal"><div class="feature-card feature-highlight"><span class="feature-icon"><i data-lucide="fingerprint"></i></span><h3>Secure by default.</h3><p>Private records, protected evidence and role-based access keep every conversation in the right hands.</p><a href="#security" class="text-link">Explore security <i data-lucide="arrow-up-right"></i></a><div class="feature-orbit"></div></div><div class="feature-card"><span class="feature-icon cyan"><i data-lucide="file-plus-2"></i></span><h3>Unique complaint ID</h3><p>One reliable reference for every update.</p></div><div class="feature-card"><span class="feature-icon pink"><i data-lucide="paperclip"></i></span><h3>Evidence upload</h3><p>Add context with validated supporting files.</p></div><div class="feature-card"><span class="feature-icon green"><i data-lucide="chart-no-axes-combined"></i></span><h3>Complaint analytics</h3><p>See patterns and progress clearly.</p></div><div class="feature-card"><span class="feature-icon purple"><i data-lucide="messages-square"></i></span><h3>Direct communication</h3><p>Keep every response linked to the case.</p></div><div class="feature-card"><span class="feature-icon orange"><i data-lucide="bell-ring"></i></span><h3>Useful notifications</h3><p>Never miss a meaningful update.</p></div></div></div></section>
+
+    <section class="security-section" id="security"><div class="container security-layout reveal"><div class="security-copy"><div class="eyebrow">TRUSTED BY DESIGN</div><h2>Your Information.<br>Your Privacy.<br><span class="gradient-text">Our Priority.</span></h2><p>ResolveHub is designed around the principle that sensitive complaints deserve careful handling and clear ownership.</p><div class="security-list"><span><i data-lucide="lock-keyhole"></i><b>Secure authentication</b><small>Session-based access protects your workspace.</small></span><span><i data-lucide="shield-check"></i><b>Role-based access control</b><small>Every view is scoped to the right people.</small></span><span><i data-lucide="file-lock-2"></i><b>Protected evidence uploads</b><small>Files are validated before they are stored.</small></span></div></div><div class="shield-visual"><div class="shield-glow"></div><svg viewBox="0 0 280 330" role="img" aria-label="Shield illustration"><path class="shield-outline" d="M140 12 247 52v94c0 76-44 133-107 166C77 279 33 222 33 146V52L140 12Z"/><path class="shield-inner" d="M140 42 217 70v75c0 55-30 98-77 126-47-28-77-71-77-126V70l77-28Z"/><path class="shield-check" d="m91 158 30 30 68-72"/></svg><div class="shield-badge"><i data-lucide="check"></i><span>Protected<br>workspace</span></div></div></div></section>
+
+    <section class="cta-section container reveal"><div class="cta-card"><div class="cta-stars">✦　·　✧　　·　✦</div><div class="eyebrow">YOUR NEXT STEP</div><h2>Don't let your concerns<br>go <span class="gradient-text">unheard.</span></h2><p>Take the first step towards accountability. Register your complaint and follow its progress through one transparent digital platform.</p><div class="hero-actions"><a class="button button-primary button-large" href="/register.html">Submit a Complaint <i data-lucide="arrow-up-right"></i></a><a class="button button-outline button-large" href="/register.html">Create an Account</a></div></div></section>
+  </main>
+
+  <footer class="site-footer" id="contact"><div class="container footer-grid"><div class="footer-brand"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"><span></span><i></i><b></b></span><span class="brand-copy"><strong>Resolve<span>Hub</span></strong><small>Digital Complaint Resolution Platform</small></span></a><p>A clearer path between every concern and the resolution it deserves.</p><div class="social-links"><a href="mailto:hello@resolvehub.local" aria-label="Email ResolveHub"><i data-lucide="mail"></i></a><a href="#contact" aria-label="Contact ResolveHub"><i data-lucide="phone"></i></a><a href="#about" aria-label="About ResolveHub"><i data-lucide="info"></i></a></div></div><div><h4>Explore</h4><a href="#sectors">Sectors</a><a href="#how-it-works">How it works</a><a href="/track-complaint.html">Track a complaint</a><a href="#features">Features</a></div><div><h4>For organizations</h4><a href="/login.html">Organization login</a><a href="/register.html">Register as employee</a><a href="/login.html">Representative workspace</a><a href="mailto:hello@resolvehub.local">Partner support</a></div><div><h4>Legal & help</h4><a href="#security">Privacy policy</a><a href="#security">Terms & conditions</a><a href="mailto:help@resolvehub.local">Help & support</a><span class="footer-contact"><i data-lucide="map-pin"></i>Built for transparent resolution</span></div></div><div class="container footer-bottom"><span>© 2026 ResolveHub. Your voice matters.</span><span>Designed for accountability <i data-lucide="sparkles"></i></span></div></footer>
+
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="{% static 'js/api.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

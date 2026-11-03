@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+media/
+staticfiles/
+.venv/
+venv/
+*.egg-info/
+.idea/
+.vscode/
+Thumbs.db
+
+.opencode/
