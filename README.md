@@ -107,3 +107,36 @@ Reports: `/api/reports/sector-wise/`, `/api/reports/monthly/`
 ## Production checklist
 
 Set a strong `SECRET_KEY`, `DEBUG=False`, production `ALLOWED_HOSTS`, HTTPS, secure cookie settings, a managed object store for media, SMTP delivery, backups and a production WSGI/ASGI server. Do not use the documented demo credentials outside local development.
+
+## Vercel Services deployment
+
+The root `vercel.json` defines two Vercel Services in one project:
+
+- `app` — the public Django-served frontend and fallback application routes.
+- `backend` — the Django API service exposed at `/api/*`.
+
+Public routing is ordered from specific to general: `/api/(.*)` routes to `backend`, and `/(.*)` routes to `app`. The browser already calls same-origin `/api/...` paths, so no frontend URL changes or internal service binding are required. There are currently no server-side calls from one service to the other.
+
+Configure these Vercel environment variables before deploying:
+
+```text
+SECRET_KEY=<strong-production-secret>
+DEBUG=False
+ALLOWED_HOSTS=<your-vercel-domain>,<your-custom-domain>
+CSRF_TRUSTED_ORIGINS=https://<your-vercel-domain>,https://<your-custom-domain>
+DB_ENGINE=django.db.backends.mysql
+DB_NAME=<managed-mysql-database>
+DB_USER=<database-user>
+DB_PASSWORD=<database-password>
+DB_HOST=<database-host>
+DB_PORT=3306
+USE_SQLITE=False
+```
+
+Run migrations and `seed_demo` against the managed database before using the deployed dashboards. Vercel's filesystem is ephemeral, so production evidence uploads should use object storage instead of local `MEDIA_ROOT`.
+
+For local Vercel Services development, install the Vercel CLI and run:
+
+```powershell
+vercel dev -L
+```

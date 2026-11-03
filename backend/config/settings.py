@@ -8,8 +8,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv("SECRET_KEY", "resolvehub-local-development-key")
-DEBUG = os.getenv("DEBUG", "True").lower() in {"1", "true", "yes"}
-ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
+DEBUG = os.getenv("DEBUG", "False").lower() in {"1", "true", "yes"}
+configured_hosts = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
+vercel_hosts = [
+    host.strip()
+    for host in [os.getenv("VERCEL_URL", ""), os.getenv("VERCEL_PROJECT_PRODUCTION_URL", "")]
+    if host.strip()
+]
+ALLOWED_HOSTS = list(dict.fromkeys(configured_hosts + vercel_hosts))
+csrf_origins = [origin.strip() for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.strip()]
+csrf_origins.extend(f"https://{host}" for host in vercel_hosts if not host.startswith("http"))
+CSRF_TRUSTED_ORIGINS = list(dict.fromkeys(csrf_origins))
 
 INSTALLED_APPS = [
     "django.contrib.admin",
