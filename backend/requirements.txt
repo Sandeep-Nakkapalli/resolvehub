@@ -1,1 +1,5 @@
--r ../requirements.txt
+Django==5.1.6
+djangorestframework==3.15.2
+PyMySQL==1.1.1
+Pillow==11.1.0
+python-dotenv==1.0.1
