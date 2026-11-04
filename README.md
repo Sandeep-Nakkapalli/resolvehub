@@ -112,9 +112,11 @@ Set a strong `SECRET_KEY`, `DEBUG=False`, production `ALLOWED_HOSTS`, HTTPS, sec
 
 Netlify serves the static HTML, CSS, and JavaScript frontend. Render runs Django, its API, and the Django admin. `netlify.toml` runs `collectstatic` and `scripts/build_netlify.py`; the script converts Django's `{% static %}` tags to static URLs and writes a same-origin proxy for `/api/*` and `/django-admin/*`. This keeps the browser's existing session-cookie and CSRF flow on the Netlify domain.
 
+Create the Netlify site first so you know its generated `*.netlify.app` origin for the Render CSRF setting. The frontend build can complete before the Render API is online.
+
 ### Deploy the Django API to Render
 
-1. In Render, create a Blueprint from this GitHub repository. The root `render.yaml` defines the `resolvehub-api` Python web service.
+1. After creating the Netlify site, create a Blueprint in Render from this GitHub repository. The root `render.yaml` defines the `resolvehub-api` Python web service.
 2. Set the prompted database environment variables to the same production MySQL database currently in use, or to a compatible managed MySQL database. Do not use SQLite for a deployed service.
 3. Set `ALLOWED_HOSTS` to the Render API hostname and any frontend hostnames that Render receives in the `Host` header. Set `CSRF_TRUSTED_ORIGINS` to the full HTTPS Netlify site origin, for example `https://your-site.netlify.app`; include your custom domain origin if you use one.
 4. Render runs migrations before starting the service. The generated `SECRET_KEY` is stored by Render.
