@@ -108,35 +108,23 @@ Reports: `/api/reports/sector-wise/`, `/api/reports/monthly/`
 
 Set a strong `SECRET_KEY`, `DEBUG=False`, production `ALLOWED_HOSTS`, HTTPS, secure cookie settings, a managed object store for media, SMTP delivery, backups and a production WSGI/ASGI server. Do not use the documented demo credentials outside local development.
 
-## Vercel Services deployment
+## Netlify frontend and Render Django API
 
-The root `vercel.json` defines two Vercel Services in one project:
+Netlify serves the static HTML, CSS, and JavaScript frontend. Render runs Django, its API, and the Django admin. `netlify.toml` runs `collectstatic` and `scripts/build_netlify.py`; the script converts Django's `{% static %}` tags to static URLs and writes a same-origin proxy for `/api/*` and `/django-admin/*`. This keeps the browser's existing session-cookie and CSRF flow on the Netlify domain.
 
-- `app` — the public Django-served frontend and fallback application routes.
-- `backend` — the Django API service exposed at `/api/*`.
+### Deploy the Django API to Render
 
-Public routing is ordered from specific to general: `/api/(.*)` routes to `backend`, and `/(.*)` routes to `app`. The browser already calls same-origin `/api/...` paths, so no frontend URL changes or internal service binding are required. There are currently no server-side calls from one service to the other.
+1. In Render, create a Blueprint from this GitHub repository. The root `render.yaml` defines the `resolvehub-api` Python web service.
+2. Set the prompted database environment variables to the same production MySQL database currently in use, or to a compatible managed MySQL database. Do not use SQLite for a deployed service.
+3. Set `ALLOWED_HOSTS` to the Render API hostname and any frontend hostnames that Render receives in the `Host` header. Set `CSRF_TRUSTED_ORIGINS` to the full HTTPS Netlify site origin, for example `https://your-site.netlify.app`; include your custom domain origin if you use one.
+4. Render runs migrations before starting the service. The generated `SECRET_KEY` is stored by Render.
 
-Configure these Vercel environment variables before deploying:
+The service hostname is normally `https://resolvehub-api.onrender.com`. If Render assigns a different hostname, use that hostname in the Netlify build environment variable `DJANGO_API_URL`.
 
-```text
-SECRET_KEY=<strong-production-secret>
-DEBUG=False
-ALLOWED_HOSTS=<your-vercel-domain>,<your-custom-domain>
-CSRF_TRUSTED_ORIGINS=https://<your-vercel-domain>,https://<your-custom-domain>
-DB_ENGINE=django.db.backends.mysql
-DB_NAME=<managed-mysql-database>
-DB_USER=<database-user>
-DB_PASSWORD=<database-password>
-DB_HOST=<database-host>
-DB_PORT=3306
-USE_SQLITE=False
-```
+### Deploy the frontend to Netlify
 
-Run migrations and `seed_demo` against the managed database before using the deployed dashboards. Vercel's filesystem is ephemeral, so production evidence uploads should use object storage instead of local `MEDIA_ROOT`.
+1. Import the same GitHub repository into Netlify and use the repository root as the base directory. `netlify.toml` supplies the build command and `dist` publish directory.
+2. If the Render API hostname differs from the default, set the Netlify build environment variable `DJANGO_API_URL` to the full HTTPS API origin, such as `https://resolvehub-api.onrender.com`.
+3. Deploy from `main`, then test registration, login, complaint tracking, and a dashboard API call.
 
-For local Vercel Services development, install the Vercel CLI and run:
-
-```powershell
-vercel dev -L
-```
+The production database must be reachable from Render. If its provider restricts inbound connections, allow the Render service to connect before deploying. Keep database credentials and `SECRET_KEY` in Render's environment settings; never commit them to this repository. Uploaded evidence still needs durable object storage because Render's local filesystem is not persistent across deploys.

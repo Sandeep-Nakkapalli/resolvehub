@@ -10,14 +10,14 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = os.getenv("SECRET_KEY", "resolvehub-local-development-key")
 DEBUG = os.getenv("DEBUG", "False").lower() in {"1", "true", "yes"}
 configured_hosts = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
-vercel_hosts = [
+platform_hosts = [
     host.strip()
-    for host in [os.getenv("VERCEL_URL", ""), os.getenv("VERCEL_PROJECT_PRODUCTION_URL", "")]
+    for host in [os.getenv("RENDER_EXTERNAL_HOSTNAME", "")]
     if host.strip()
 ]
-ALLOWED_HOSTS = list(dict.fromkeys(configured_hosts + vercel_hosts))
+ALLOWED_HOSTS = list(dict.fromkeys(configured_hosts + platform_hosts))
 csrf_origins = [origin.strip() for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.strip()]
-csrf_origins.extend(f"https://{host}" for host in vercel_hosts if not host.startswith("http"))
+csrf_origins.extend(f"https://{host}" for host in platform_hosts if not host.startswith("http"))
 CSRF_TRUSTED_ORIGINS = list(dict.fromkeys(csrf_origins))
 
 INSTALLED_APPS = [
@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -95,6 +96,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "frontend"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
