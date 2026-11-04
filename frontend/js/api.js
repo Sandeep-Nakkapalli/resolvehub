@@ -9,11 +9,26 @@
     return getCookie('csrftoken');
   }
 
+  async function ensureCsrfToken() {
+    let token = csrfToken();
+    if (token) return token;
+
+    const response = await fetch('/api/auth/csrf/', {
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json' },
+    });
+    if (!response.ok) throw new Error('Could not initialize secure form submission.');
+
+    token = csrfToken();
+    if (!token) throw new Error('The security cookie was not set. Please reload and try again.');
+    return token;
+  }
+
   async function apiFetch(url, options = {}) {
     const config = { credentials: 'same-origin', ...options };
     const method = (config.method || 'GET').toUpperCase();
     const headers = { Accept: 'application/json', ...(config.headers || {}) };
-    if (!['GET', 'HEAD', 'OPTIONS'].includes(method)) headers['X-CSRFToken'] = csrfToken();
+    if (!['GET', 'HEAD', 'OPTIONS'].includes(method)) headers['X-CSRFToken'] = await ensureCsrfToken();
     if (config.body && !(config.body instanceof FormData) && typeof config.body !== 'string') {
       headers['Content-Type'] = 'application/json';
       config.body = JSON.stringify(config.body);

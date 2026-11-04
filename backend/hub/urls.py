@@ -15,6 +15,7 @@ urlpatterns = [
     path("organization-dashboard.html", views.page, {"template_name": "organization-dashboard.html"}, name="organization-dashboard"),
     path("admin-dashboard.html", views.page, {"template_name": "admin-dashboard.html"}, name="admin-dashboard"),
     path("api/public/stats/", api.public_stats, name="public-stats"),
+    path("api/auth/csrf/", views.csrf_cookie, name="api-csrf-cookie"),
     path("api/auth/register/", api.register, name="api-register"),
     path("api/auth/login/", api.auth_login, name="api-login"),
     path("api/auth/logout/", api.auth_logout, name="api-logout"),
