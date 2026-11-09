@@ -7,17 +7,23 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(BASE_DIR / ".env")
 
-SECRET_KEY = os.getenv("SECRET_KEY", "resolvehub-local-development-key")
+SECRET_KEY = os.getenv("SECRET_KEY") or os.getenv("DJANGO_SECRET_KEY") or "resolvehub-local-development-key"
 DEBUG = os.getenv("DEBUG", "False").lower() in {"1", "true", "yes"}
+if os.getenv("VERCEL") and not (os.getenv("SECRET_KEY") or os.getenv("DJANGO_SECRET_KEY")):
+    raise RuntimeError("Set SECRET_KEY (or DJANGO_SECRET_KEY) in the Vercel project environment.")
 configured_hosts = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
 platform_hosts = [
     host.strip()
-    for host in [os.getenv("RENDER_EXTERNAL_HOSTNAME", "")]
+    for host in [os.getenv("RENDER_EXTERNAL_HOSTNAME", ""), os.getenv("VERCEL_URL", "")]
     if host.strip()
 ]
 ALLOWED_HOSTS = list(dict.fromkeys(configured_hosts + platform_hosts))
+if os.getenv("VERCEL"):
+    ALLOWED_HOSTS = list(dict.fromkeys(ALLOWED_HOSTS + [".vercel.app"]))
 csrf_origins = [origin.strip() for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.strip()]
 csrf_origins.extend(f"https://{host}" for host in platform_hosts if not host.startswith("http"))
+if os.getenv("VERCEL"):
+    csrf_origins.append("https://*.vercel.app")
 CSRF_TRUSTED_ORIGINS = list(dict.fromkeys(csrf_origins))
 
 INSTALLED_APPS = [
@@ -97,6 +103,10 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "frontend"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
