@@ -76,15 +76,23 @@ if os.getenv("USE_SQLITE", "False").lower() in {"1", "true", "yes"}:
         }
     }
 else:
+    database_engine = os.getenv("DB_ENGINE", "django.db.backends.mysql")
+    database_options = {"charset": "utf8mb4"} if database_engine.endswith("mysql") else {}
+    if database_engine.endswith("postgresql"):
+        database_options = {
+            "sslmode": os.getenv("DB_SSLMODE", "require"),
+            "prepare_threshold": None,
+        }
     DATABASES = {
         "default": {
-            "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.mysql"),
+            "ENGINE": database_engine,
             "NAME": os.getenv("DB_NAME", "resolvehub"),
             "USER": os.getenv("DB_USER", "root"),
             "PASSWORD": os.getenv("DB_PASSWORD", ""),
             "HOST": os.getenv("DB_HOST", "127.0.0.1"),
             "PORT": os.getenv("DB_PORT", "3306"),
-            "OPTIONS": {"charset": "utf8mb4"},
+            "OPTIONS": database_options,
+            "CONN_MAX_AGE": 0 if os.getenv("VERCEL") else 60,
         }
     }
 

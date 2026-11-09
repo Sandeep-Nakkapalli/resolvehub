@@ -113,7 +113,7 @@ Set a strong `SECRET_KEY`, `DEBUG=False`, production `ALLOWED_HOSTS`, HTTPS, sec
 Vercel serves the pages, static files, API, and Django admin from one Django application. The repository-root `manage.py`, `requirements.txt`, and `vercel.json` configure the Python build; `backend/config/wsgi.py` and `backend/config/asgi.py` expose the app. Vercel-hosted `.vercel.app` origins are allowed for Django host and CSRF checks.
 
 1. Import this GitHub repository into Vercel and keep the project root at the repository root.
-2. Add production environment variables in Vercel: `SECRET_KEY` (a strong random value), `DEBUG=False`, `DB_ENGINE=django.db.backends.mysql`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, and `DB_PORT`. Use a managed MySQL database reachable from Vercel; do not use local SQLite in production.
+2. Add production environment variables in Vercel: `SECRET_KEY` (a strong random value), `DEBUG=False`, `DB_ENGINE=django.db.backends.postgresql`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`, and `DB_SSLMODE=require`. Use the Supabase transaction pooler (port `6543`) for Vercel serverless functions; disable prepared statements and persistent Django connections for this pooler.
 3. If using a custom domain, add its hostname to `ALLOWED_HOSTS` and its full HTTPS origin to `CSRF_TRUSTED_ORIGINS`.
 4. Apply migrations against the configured production database with `python manage.py migrate --noinput` from a trusted environment. Do not put production migrations in the Vercel build, which can run for previews as well as production.
 5. Deploy from `main`, then verify registration, login, complaint tracking, static assets, and a dashboard API call.
