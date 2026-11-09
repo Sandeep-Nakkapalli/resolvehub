@@ -65,8 +65,10 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
-ASGI_APPLICATION = "config.asgi.application"
+# Vercel resolves these paths from the repository root. The Django package is
+# kept under backend/, so use its full package path for both runtimes.
+WSGI_APPLICATION = "backend.config.wsgi.application"
+ASGI_APPLICATION = "backend.config.asgi.application"
 
 if os.getenv("USE_SQLITE", "False").lower() in {"1", "true", "yes"}:
     DATABASES = {
